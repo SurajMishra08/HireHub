@@ -1,0 +1,65 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block maintitle %}
+Hire Hub - Find best jobs
+{% endblock %}
+
+{% block main %}
+<style>
+.job-card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #f8f9fa;
+}
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.btn-browse:hover {
+    background: #023e8a;
+    transform: scale(1.1);
+    color: #fff;
+}
+.animate-card {
+    animation: fadeInUp 0.8s ease-in-out;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <p>All <b>{{all_jobs.count}}</b> jobs found</p>
+        {% for job in all_jobs %}
+            <div class="row job-card shadow px-5 py-3 mb-3 align-items-center animate-card">
+                <div class="col-2">
+                    {% if job.company.logo %}
+                    <img src="{{job.company.logo.url}}" alt="" height="60">
+                    {% else %}
+                    <img src="" alt="">
+                    {% endif %}
+
+                </div>
+                <div class="col-4">
+                    <p class="m-0 text-primary">{{job.get_job_type_display}}</p>
+                    <h5>{{job.title}}</h5>
+                </div>
+                <div class="col-4">
+                    <p class="m-0">{{job.location}}</p>
+                    <p>&#8377; {{job.salary}} / Yearly</p>
+                </div>
+                <div class="col-2 text-lg-end">
+                    <a href="{% url 'jobdetails' id=job.id %}" class="btn me-2">
+                        <i class="fa-solid fa-expand"></i>
+                    </a>
+                    <a href="{% url 'apply' id=job.id %}" class="btn btn-success rounded-pill btn-browse">Apply</a>
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+
+{% endblock %}

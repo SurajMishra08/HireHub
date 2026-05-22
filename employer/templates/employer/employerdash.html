@@ -1,0 +1,123 @@
+{% extends 'employer/employerbase.html' %}
+{% load static %}
+{% block employer %}
+<style>
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  .stat-icon {
+    font-size: 2rem;
+    color: #244034;
+  }
+</style>
+
+<div class="container-fluid mt-4">
+  <h2 class="fw-bold text-dark mb-4">Welcome, {{empdata.first_name}}!</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <i class="ti ti-briefcase stat-icon"></i>
+        <h5 class="mt-2">Jobs Posted</h5>
+        <p class="fw-bold text-primary">{{empdata.jobs.count}}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <i class="ti ti-users stat-icon"></i>
+        <h5 class="mt-2">Applicants</h5>
+        <p class="fw-bold text-success">
+          {% with total=empdata.jobs.all|length %}
+            {{total}}
+          {% endwith %}
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <i class="ti ti-building stat-icon"></i>
+        <h5 class="mt-2">Company</h5>
+        <p class="fw-bold text-info">
+          {% if empdata.company %} {{empdata.company.company_name}} {% else %} Not Added {% endif %}
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <i class="ti ti-lock stat-icon"></i>
+        <h5 class="mt-2">Account</h5>
+        <p class="fw-bold text-warning">Active</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="card p-4">
+        <h4 class="fw-bold mb-3">Recent Jobs</h4>
+        <table class="table table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Location</th>
+              <th>Deadline</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in empdata.jobs.all|slice:":5" %}
+            <tr>
+              <td>{{job.title}}</td>
+              <td>{{job.get_job_type_display}}</td>
+              <td>{{job.location}}</td>
+              <td>{{job.deadline}}</td>
+              <td>
+                {% if job.is_active %}
+                  <span class="badge bg-success">Active</span>
+                {% else %}
+                  <span class="badge bg-danger">Closed</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="text-center text-muted">No jobs posted yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="card p-4">
+        <h4 class="fw-bold mb-3">Applicants Overview</h4>
+        <div id="chart-applicants" style="height:300px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'admin/assets/js/plugins/apexcharts.min.js' %}"></script>
+<script>
+  var options = {
+    chart: { type: 'bar', height: 300 },
+    series: [{
+      name: 'Applicants',
+      data: [10, 20, 15, 30, 25] 
+    }],
+    xaxis: {
+      categories: ['Job 1', 'Job 2', 'Job 3', 'Job 4', 'Job 5']
+    }
+  };
+  var chart = new ApexCharts(document.querySelector("#chart-applicants"), options);
+  chart.render();
+</script>
+{% endblock %}

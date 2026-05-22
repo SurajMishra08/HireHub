@@ -1,0 +1,125 @@
+{% extends 'employer/employerbase.html' %}
+{% load static %}
+{% block employer %}
+<h1 class="text-center mb-4"></h1>
+<div class="table-responsive">
+<table class="table table-hover table-striped table-bordered align-middle">
+    <thead>
+        <tr>
+            <th>S. No</th>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Type</th>
+            <th>Vacancy</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in emp_job %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{job.title}}</td>
+            <td>{{job.company.company_name}}</td>
+            <td>{{job.location}}</td>
+            <td>{{job.job_type}}</td>
+            <td>{{job.vacancy}}</td>
+            <td>
+                {{job.deadline}}
+            </td>
+
+            <td>
+                {% if job.is_active %}
+                <span class="badge bg-success text-light">Active</span>
+                {% else %}
+                <span class="badge bg-danger text-light">Inactive</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="" class="btn btn-outline-primary p-2" data-bs-toggle="modal"
+                    data-bs-target="#edit{{job.id}}"><i class="ti ti-edit"></i></a>
+                <!-- Modal For edit jobs -->
+                <div class="modal fade" id="edit{{job.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header navy">
+                                <h1 class="modal-title fs-5 text-clrs" id="exampleModalLabel">{{job.title}}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body bg">
+                                <form class="row g-3 p-3" method="post" action="{% url 'editjob' id=job.id %}">
+                                    {% csrf_token %}
+                                    <div class="col-md-6">
+                                        <label for="jt" class="fw-bold mb-2">Job Title</label>
+                                        <input type="text" value="{{job.title}}" name="title" id="jt"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="type" class="fw-bold mb-2">Job Type</label>
+                                        <select name="job_type" id="type" class="form-select">
+                                            <option value="" selected disabled>select job</option>
+                                            <option value="full_time" {% if job.job_type == 'full_time' %} selected {% endif %}>Full Time</option>
+                                            <option value="part_time" {% if job.job_type == 'part_time' %} selected {% endif %}>Part Time</option>
+                                            <option value="intership" {% if job.job_type == 'intership' %} selected {% endif %}>Internship</option>
+                                            <option value="contract" {% if job.job_type == 'contract' %} selected {% endif %}>Contract</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="sal" class="fw-bold mb-2">Salary</label>
+                                        <input type="number" value="{{job.salary}}" name="salary" id="sal"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="dead" class="fw-bold mb-2">Deadline</label>
+                                        <input type="date" value="{{job.deadline|date:'Y-m-d'}}" name="deadline"
+                                            id="dead" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="skill" class="fw-bold mb-2">Skill Required</label>
+                                        <input type="text" list="skills"
+                                            value="{% for s in job.skills_required.all %}{{s.skill_name}} {% if not forloop.last %},{% endif %} {% endfor %}"
+                                            name="skills_required" id="jt" class="form-control"
+                                            placeholder="Eg.python,java,php,js">
+                                        <datalist id="skills">
+                                            {% for s in all_skill %}
+                                            <option value="{{s.skill_name}}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="vac" class="fw-bold mb-2">No of Vacancy</label>
+                                        <input type="number" value="{{job.vacancy}}" name="vacancy" id="vac"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="loc" class="fw-bold mb-2">Location</label>
+                                        <input type="text" value="{{job.location}}" name="location" id="loc"
+                                            class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="desc" class="fw-bold mb-2">Job description</label>
+                                        <textarea type="text" name="description" id="desc"
+                                            class="form-control">{{job.description}}</textarea>
+                                    </div>
+                                    <button class="w-100 btn btn-sub text-clrs" type="submit">Edit Job</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'deljob' id=job.id %}" class="btn btn-outline-danger p-2"><i
+                        class="ti ti-trash"></i></a>
+                <a href="{% url 'viewapplicant' id=job.id  %}" class="btn btn-outline-success p-2"><i
+                        class="ti ti-eye"></i></a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

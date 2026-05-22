@@ -1,0 +1,78 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block maintitle %}
+Hire Hub - Find Best Jobs
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center about-section">
+    <div class="row w-75">
+        <div class="col-sm-12 text-center mb-5">
+            <h1 class="fw-bold text-light animate-title">About HireHub</h1>
+            <p class="text-light fs-5">Connecting job seekers and employers with ease, speed, and trust.</p>
+        </div>
+
+        <!-- Mission Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 about-card h-100">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-bullseye fa-3x text-primary mb-3"></i>
+                    <h4 class="fw-bold">Our Mission</h4>
+                    <p>To empower job seekers and employers by providing a seamless hiring experience with modern technology.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 about-card h-100">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-eye fa-3x text-success mb-3"></i>
+                    <h4 class="fw-bold">Our Vision</h4>
+                    <p>To become the most trusted platform for career growth and talent acquisition worldwide.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Values Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 about-card h-100">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-handshake fa-3x text-warning mb-3"></i>
+                    <h4 class="fw-bold">Our Values</h4>
+                    <p>Integrity, innovation, and inclusivity drive everything we do at HireHub.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Background */
+.about-section {
+    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+    padding: 50px 0;
+}
+
+/* Title animation */
+.animate-title {
+    animation: fadeInDown 1s ease-in-out;
+}
+
+/* Card styling */
+.about-card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+/* Keyframes */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %}

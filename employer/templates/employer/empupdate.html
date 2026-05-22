@@ -1,0 +1,185 @@
+{% extends 'employer/employerbase.html' %}
+{% load static %}
+{% block employer %}
+<style>
+    .nav li .active {
+        background-color: #244034 !important;
+        color: white !important;
+    }
+
+    .nav-link {
+        background-color: snow;
+    }
+
+    .nav-link:hover {
+        border-bottom: 2px solid !important;
+    }
+    [disabled]:hover {
+        cursor: not-allowed;
+    }
+
+    .profile-section {
+        height: 150px;
+        width: 150px;
+        border-radius: 10px;
+    }
+</style>
+<h1 class="text-center mt-2">Hello {{empdata.first_name}}</h1>
+<div class="row">
+    <div class="col-sm-11 shadow my-3 py-2 mx-auto bg">
+        <ul class="nav nav-tabs py-3" id="myTab" role="tablist">
+            <li class="nav-item pe-3" role="presentation">
+                <button class="nav-link active text-dark" data-bs-toggle="tab" data-bs-target="#tab1" type="button">
+                    Personal Details
+                </button>
+            </li>
+
+            <li class="nav-item pe-3" role="presentation">
+                <button class="nav-link text-dark" data-bs-toggle="tab" data-bs-target="#tab2" type="button">
+                    Company Details
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content mt-3 p-3">
+            <div class="tab-pane fade show active" id="tab1">
+                 <h2>Personal Details</h2>
+                <form action="" method="post" enctype="multipart/form-data" class="row g-3">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                        <label for="picture" class="mb-2 fw-bold mt-5">Select Profile Picture</label>
+                        <input type="file" name="picture" id="picture" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        {% if empdata.picture %}
+                        <div class="profile-section mx-auto">
+                            <img src="{{empdata.picture.url}}" class="border border-3 border-dark rounded-circle"
+                                width="100%" height="100%" alt="No profile Chosen">
+                        </div>
+                        {% else %}
+                        <div class="profile-section mx-auto">
+                            <img src="{% static 'admin/assets/images/user/avatar-2.jpg' %}"
+                                class="border border-3 border-dark rounded-circle" width="100%" height="100%"
+                                alt="No profile Chosen">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstname" class="fw-bold mb-2">First Name</label>
+                        <input type="text" required name="firstname" value="{{empdata.first_name}}" id="firstname"
+                            class="form-control ">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastname" class="fw-bold mb-2">Last Name</label>
+                        <input type="text" required name="lastname" value="{{empdata.last_name}}" id="lastname"
+                            class="form-control ">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="dob" class="fw-bold mb-2">DOB</label>
+                        <input type="date" required value="{{empdata.dob|date:'Y-m-d'}}" name="dob" id="dob"
+                            class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="gender"  class="fw-bold mb-2">Gender</label>
+                        <select name="gender" required id="gender" class="form-select">
+                            <option value="" disabled selected>--Select Gender--</option>
+                            <option value="male" {% if emdata.gender == 'male' %} selected {% endif %}>Male</option>
+                            <option value="female" {% if emdata.gender == 'female' %} selected {% endif %}>Female</option>
+                            <option value="na" {% if emdata.gender == 'na' %} selected {% endif %}>Prefer not to say</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contact_no" class="fw-bold mb-2">Contact No.</label>
+                        <input type="number" required name="contact_no" value="{{empdata.contact_no}}" id="contact_no"
+                            class="form-control ">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="fw-bold mb-2">Email.</label>
+                        <input type="email" name="email" value="{{empdata.email}}" id="email" disabled
+                            class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="designation" class="fw-bold mb-2">Designation.</label>
+                        <input type="text" value="{{empdata.designation}}" name="designation"  id="designation" 
+                            class="form-control mb-4">
+                    </div>
+                    
+                    <div class="col-12">
+                        <button class="w-100 text-light py-3 fw-bold rounded-pill" type="submit"
+                            style="background-color: #244034;">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- company details start -->
+            <div class="tab-pane fade" id="tab2">
+             <form action="{% url 'companydetails' %}" method="post" enctype="multipart/form-data" class="row g-3">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                        <label for="logo" class="mb-2 fw-bold mt-5">Select Company logo</label>
+                        <input type="file" name="logo" id="logo" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        {% if companydata.logo %}
+                        <div class="profile-section mx-auto">
+                            <img src="" class="border border-3 border-dark rounded-circle"
+                                width="100%" height="100%" alt="No profile Chosen">
+                        </div>
+                        {% else %}
+                        <div class="profile-section mx-auto">
+                            <img src="{% static 'admin/assets/images/user/avatar-2.jpg' %}"
+                                class="border border-3 border-dark rounded-circle" width="100%" height="100%"
+                                alt="No profile Chosen">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="company_name" class="fw-bold mb-2">Company Name</label>
+                        <input type="text" required name="company_name" id="company_name" value="{{empdata.company_name}}"
+                            class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contact_no" class="fw-bold mb-2">Contact No.</label>
+                        <input type="number" required name="contact_no" id="contact_no"
+                            class="form-control ">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="fw-bold mb-2">Company Email.</label>
+                        <input type="email" name="email" id="email"
+                            class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="industry" class="fw-bold mb-2">Industry.</label>
+                        <input type="text"  placeholder="IT / Finance / Manufacturing" name="industry"  id="industry" 
+                            class="form-control ">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="website" class="fw-bold mb-2">Company Website URL</label>
+                        <input type="website"  name="website"  id="website" 
+                            class="form-control ">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="established_at" class="fw-bold mb-2">Company established date</label>
+                        <input type="date"  name="established_at"  id="established_at" 
+                            class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="location" class="fw-bold mb-2">Location</label>
+                        <textarea type="text" required name="location" id="location"
+                            class="form-control "></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="details" class="fw-bold mb-2">Details / Description</label>
+                        <textarea type="text" required name="details" id="details"
+                            class="form-control mb-4"></textarea>
+                    </div>                 
+                    <div class="col-12">
+                        <button class="w-100 text-light py-3 fw-bold rounded-pill" type="submit"
+                            style="background-color: #244034;">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+            <!-- resume end -->
+        </div>
+    </div>
+</div>
+{% endblock %}

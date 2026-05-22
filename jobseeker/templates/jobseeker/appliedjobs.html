@@ -1,0 +1,93 @@
+{% extends 'jobseeker/jobseekerbase.html' %}
+{% load static %}
+{% block admin %}
+<style>
+.card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.table th {
+    background: #203a43;
+    color: #fff;
+    text-align: center;
+}
+
+.btn-primary {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+</style>
+
+<div class="col-sm-12">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center text-primary mb-4">My Applications</h3>
+        <table class="table table-hover table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Salary</th>
+                    <th>Deadline</th>
+                    <th>Applied At</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ app.job.title }}</td>
+                    <td>{{ app.job.company.company_name }}</td>
+                    <td>&#8377; {{ app.job.salary }}</td>
+                    <td>{{ app.job.deadline|date:"d M Y" }}</td>
+                    <td>{{ app.applied_at|date:"d M Y, H:i" }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" 
+                                data-bs-toggle="modal" data-bs-target="#view{{ app.id }}">
+                            View Status
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="view{{ app.id }}" tabindex="-1" aria-labelledby="statusLabel{{ app.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title" id="statusLabel{{ app.id }}">Application Status</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Job:</strong> {{ app.job.title }}</p>
+                                <p><strong>Company:</strong> {{ app.job.company.company_name }}</p>
+                                <p><strong>Status:</strong> 
+                                    {% if app.status == 'pending' %}
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    {% elif app.status == 'shortlisted' %}
+                                        <span class="badge bg-info">Shortlisted</span>
+                                    {% elif app.status == 'rejected' %}
+                                        <span class="badge bg-danger">Rejected</span>
+                                    {% elif app.status == 'selected' %}
+                                        <span class="badge bg-success">Selected</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No applications found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

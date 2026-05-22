@@ -1,0 +1,105 @@
+{% extends 'employer/employerbase.html' %}
+{% load static %}
+{% block employer %}
+<h1 class="text-center mb-4">View Applicant</h1>
+<div class="row">
+    <div class="col-sm-12">
+            <h4 class="text-center mb-5">Application for - {{job.title}}</h4>
+            <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered align-middle">
+                
+                <tr>
+                    <th>S.No.</th>
+                    <th>Name</th>
+                    <th>Photo</th>
+                    <th>Contact No</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Skills</th>
+                    <th>Actions</th>
+                    <th>Status</th>
+                </tr>
+                {% for app in applications %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{app.jobseeker.first_name}} {{app.jobseeker.last_name}}</td>
+                    <td>
+                        {% if app.jobseeker.picture %}
+                        <img src="{{app.jobseeker.picture.url}}" height="50px"
+                            class="border border-primary rounded-circle border-2" alt="">
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td>{{app.jobseeker.contact_no}}</td>
+                    <td>{{app.jobseeker.email}}</td>
+                    <td>
+                        {% if app.jobseeker.job.is_active %}
+                        <span class="badge bg-success text-light">Active</span>
+                        {% else %}
+                        <span class="badge bg-danger text-light">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>{% for s in app.jobseeker.skills.all %}
+                        <span class="badge bg-primary">{{s.skills_name}}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#js{{app.jobseeker.id}}"
+                            class="btn btn-outline-primary"><i class="ti ti-eye"></i></a>
+                    </td>
+                    <td style="white-space: nowrap;"> 
+                        <form action="{% url 'updatestatus' appid=app.id %}" method="post">
+                            {% csrf_token %}
+                            <select name="status" id="" class="form-select" onchange="this.form.submit()">
+                                <option value="pending" {% if app.status == "pending" %} selected {% endif %}>Pending</option>
+                                <option value="shortlisted" {% if app.status == "shortlisted" %} selected {% endif %}>Shortlisted</option>
+                                <option value="selected" {% if app.status == "selected" %} selected {% endif %}>Selected</option>
+                                <option value="rejected" {% if app.status == "rejected" %} selected {% endif %}>Rejected</option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="js{{app.jobseeker.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">{{app.jobseeker.first_name}} {{app.jobseeker.last_name}}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        {% if app.jobseeker.picture %}
+                                        <img src="{{app.jobseeker.picture.url}}"
+                                            class="border border-primary rounded-circle border-2 img-fluid mx-auto" alt="">
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-sm-9 text-center">
+                                        <h4>{{app.jobseeker.first_name}} {{app.jobseeker.last_name}}</h4>
+                                        <h6>{{app.jobseeker.contact_no}}</h6>
+                                        <h6>{{app.jobseeker.email}}</h6>
+                                        <p>{% for s in app.jobseeker.skills.all %}
+                                            <span class="badge bg-primary">{{s.skills_name}}</span>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal end -->
+                {% endfor %}
+            </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

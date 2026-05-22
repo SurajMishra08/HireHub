@@ -1,0 +1,310 @@
+{% extends 'jobseeker/jobseekerbase.html' %}
+{% load static %}
+{% block admin %}
+<style>
+.nav li .active {
+    background-color: rgb(29, 108, 124) !important;
+}
+[disabled]:hover{
+    cursor: not-allowed;
+}
+.profile-section{
+    height: 130px;
+    width: 100px;
+    border-radius: 10px;
+}
+</style>
+<div class="row">
+    <h2 align="center">Update Profile</h2>
+    <div class="col-sm-12">
+    <div class="card p-4 shadow shadow-bg">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active " data-bs-toggle="tab" data-bs-target="#tab1" type="button">
+                        Personal Details
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" type="button">
+                        Educational Details
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" type="button">
+                        Experience
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" type="button">
+                        Addtitonal Information
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab5" type="button">
+                        Skills
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="tab1">
+                    <h4>Personal Details</h4>
+                    <form method="post" class="row " enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col-md-6 my-auto">
+                            <label for="picture" class="mb-2 fw-bold">Select Profile Picture</label>
+                            <input type="file" name="picture" id="pro" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="profile-section shadow mx-auto">
+                                {% if js.picture %}
+    <img src="{{ js.picture.url }}" class="img-fluid rounded shadow" alt="Profile picture">
+{% else %}
+    <img src="{% static 'images/default-avatar.png' %}" class="img-fluid rounded shadow" alt="Default profile picture">
+{% endif %}
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="firstname" class="fw-bold mb-2">First Name</label>
+                            <input type="text" name="firstname" value="{{js.first_name}}" id="firstname" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastname" class="fw-bold mb-2">Last Name</label>
+                            <input type="text" name="lastname" value="{{js.last_name}}" id="lastname" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="dob" class="fw-bold mb-2">DOB</label>
+                            <input type="date" name="dob" value="{{js.dob|date:'Y-m-d'}}" id="dob" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="firstname" class="fw-bold mb-2">Select Gender</label>
+                            <select name="gender" id="gender" class="form-select">
+                                {% if js.gender %}
+                                     <option value="{{js.gender}}" selected>{{js.gender|title}}</option>
+                                {% else %}
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="others">Others</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="contact_no" class="fw-bold mb-2">Contact No.</label>
+                            <input type="number" name="contact_no" value="{{js.contact_no}}" id="contact_no" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="fw-bold mb-2">E mail</label>
+                            <input type="email" name="email" value="{{js.email}}" id="em" class="form-control mb-4" disabled>
+                        </div>
+                        <h4>Address Details</h4>
+                        <div class="col-md-6">
+                            <label for="locality" class="fw-bold mb-2">Building No./Area/Landmark</label>
+                            <input type="text" name="locality" value="{{js.locality}}" id="locality" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="city" class="fw-bold mb-2">City</label>
+                            <input type="text" name="city" value="{{js.city}}" id="city" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="district" class="fw-bold mb-2">District</label>
+                            <input type="text" name="district" id="district" value="{{js.district}}" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="zip_code" class="fw-bold mb-2">Zip_Code</label>
+                            <input type="text" name="zip_code" value="{{js.zip_code}}" id="zip_code" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="state" class="fw-bold mb-2">State</label>
+                            <input type="text" name="state" value="{{js.state}}" id="state" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country" class="fw-bold mb-2">Country</label>
+                            <input type="text" name="country" value="{{js.country}}" id="country" class="form-control mb-4" placeholder="India">
+                        </div>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="tab2">
+                    <h4>Educational Details</h4>
+                    {% for e in educations %}
+                    <div class="card p-3">
+                        <h5>{{e.degree_name|title}}</h5>
+                        <p class="position-absolute end-0 me-4 fw-bold">{{e.start_year}} - {{e.end_year}}</p>
+                        <h6>{{e.specialization}}</h6>
+                        <p>{{e.institute}} - <b>{{e.university}}</b></p>
+                        <a href="" class="btn btn-info position-absolute end-0 me-4 mt-4">
+                            <i class="ti ti-edit-circle"></i>
+                        </a>
+                    </div>
+                    {% empty %}
+                    <p>No EDucational details are added yet.</p>
+                    {% endfor %}
+                    <form method="post" action="{% url 'save_education' %}" class="row g-3 mt-3">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="dn" class="fw-bold mb-2">Degree Name</label>
+                            <select name="degree_name" value="" id="dn" class="form-select mb-4">
+                                <option value="high school" selected disabled>Select Degree</option>
+                                <option value="high school">High School</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="diploma ">Diploma</option>
+                                <option value="bachelor">Bachelor's</option>
+                                <option value="masters">Master's</option>
+                                <option value="phd">Phd</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sp" class="fw-bold mb-2">Specialization</label>
+                            <input type="text" name="specialization" value="" id="sp" class="form-control mb-4" placeholder="Branch">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inst" class="fw-bold mb-2">Institute</label>
+                            <input type="text" name="institute" value="" id="inst" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="un" class="fw-bold mb-2">University</label>
+                            <input type="text" name="university" value="" id="un" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sy" class="fw-bold mb-2">Start Year</label>
+                            <input type="text" name="start_year" value="" id="sy" class="form-control mb-4" placeholder="20xx">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ey" class="fw-bold mb-2">End Year</label>
+                            <input type="text" name="end_year" value="" id="ey" class="form-control mb-4" placeholder="20xx">
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="tab3">
+                    <h4>Experience</h4>
+                    {% for ex in experiences %}
+                    <div class="card p-3">
+                        <h5>{{ex.company_name}}</h5>
+                        <h6>{{ex.designation}}</h6>
+                        <p class="position-absolute end-0 me-4 fw-bold">{{ex.start_date}} - {{ex.end_date}}</p>                     
+                        <p>{{ex.description}}</p>
+                        <a href="" class="btn btn-info position-absolute end-0 me-4 mt-4">
+                            <i class="ti ti-edit-circle"></i>
+                        </a>
+                    </div>
+                    {% empty %}
+                        <p>No EDucational details are added yet.</p>
+                    {% endfor %}
+
+                    <form method="post" action="{% url 'save_experience' %}" class="row">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="comp" class="fw-bold mb-2">Company / Organization Name:</label>
+                            <input type="text" name="company_name" value="" id="comp" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="des" class="fw-bold mb-2">Designation</label>
+                            <input type="text" name="designation" value="" id="des" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sd" class="fw-bold mb-2">Start Date</label>
+                            <input type="date" name="start_date" value="" id="sd" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ed" class="fw-bold mb-2">End Date</label>
+                            <input type="date" name="end_date" value="" id="ed" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="desc" class="fw-bold mb-2">Description</label>
+                            <input type="text" name="description" value="" id="desc" class="form-control mb-4">
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="tab4">
+                    <h4>Addtitonal Information</h4>
+                    <form method="post" class="row" action="{% url 'save_additional' %}">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="resume" class="fw-bold mb-2">Upload Resume</label>
+                            <input type="file" name="resume" value="{{js.resume}}" id="resume" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cl" class="fw-bold mb-2">Cover Letter (Optional)</label>
+                            <input type="file" name="cover_letter" value="{{js.cover_letter}}" id="cl" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="esal" class="fw-bold mb-2">Expected Salary(in LPA)</label>
+                            <input type="number" name="expected_salary" value="{{js.expected_salary}}" id="esal" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="csal" class="fw-bold mb-2">Current Salary(in LPA)</label>
+                            <input type="number" name="current_salary" value="{{js.current_salary}}" id="csal" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="notice_period" class="fw-bold mb-2">Notice Period(in days)</label>
+                            <input type="number" name="notice_period" value="{{js.notice_period}}" id="notice_period" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lkdu" class="fw-bold mb-2">linkedin Url</label>
+                            <input type="text" name="linkedin_url" value="{{js.linkedin_url}}" id="lkdu" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Github" class="fw-bold mb-2">Github Url</label>
+                            <input type="text" name="github_url" value="{{js.github_url}}" id="Github" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="portfolio_url" class="fw-bold mb-2">Portfolio_url</label>
+                            <input type="text" name="portfolio_url" value="{{js.portfolio_url}}" id="portfolio_url" class="form-control mb-4">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" name="is_open_to_work" role="switch" class="form-check-input" id="work" {% if js.is_open_to_work %} checked {% endif %}>
+                                <label for="work" class="form-check-label"><i>Is Open to work</i></label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info mt-4">Submit</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="tab5">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>My skills</h3>
+                        {% if js.skills.all %}
+                        <ul class="py-3">
+                            {% for s in js.skills.all %}
+                            <li class="badge bg-primary me-2 px-3 fs-5 py-2 mb-2">{{s.skill_name|title}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No skills added yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <form method="Post" action="{% url 'save_skill' %}">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                        <label for="skill">Skill (comma separated)</label>
+                        <input type="text" list="skills" name="skills" id="skill" class="form-control mb-4"
+                            placeholder="Eg. Python, Java"
+                            value="{% for s in jsdata.skills.all %}{{s.skill_name}} {% if not forloop.last %},{% endif %} {% endfor %}">
+                        <datalist>
+                            {% for s in all_skills %}
+                            <option value="{{s.skill_name}}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save Skill</button>
+                </form>
+            </div>
+            </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'employer/employerbase.html' %}
+{% load static %}
+{% block employer %}
+<div class="row">
+    <div class="col-md-12 p-5">
+        <h1 class="text-center mb-5">Post Job</h1>
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+            <div class="col-12">
+                <label for="jc">Select Job Category</label>
+                <select name="catid" id="jc" class="form-select">
+                    <option value="">Uncategorize</option>
+                    {% for c in cats %}
+                    <option value="{{c.id}}">{{c.category_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="jt" class="fw-bold mb-2">Job Title</label>
+                <input type="text" name="title" id="jt" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="type" class="fw-bold mb-2">Job Type</label>
+                <select name="job_type" id="type" class="form-select">
+                    <option value="" selected disabled>select job</option>
+                    <option value="full_time">Full Time</option>
+                    <option value="part_time">Part Time</option>
+                    <option value="internship">Internship</option>
+                    <option value="contract">Contract</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="sal" class="fw-bold mb-2">Salary</label>
+                <input type="number" name="salary" id="sal" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="loc" class="fw-bold mb-2">Location</label>
+                <input type="text" name="location" id="loc" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="skill" class="fw-bold mb-2">Skill Required</label>
+                <input type="text" list="skills" name="skills_required" id="jt" class="form-control"
+                    placeholder="Eg.python,java,php,js">
+                <datalist id="skills">
+                    {% for s in all_skill %}
+                    <option value="{{s.skill_name}}"></option>
+                    {% endfor %}
+                </datalist>
+            </div>
+            <div class="col-md-6">
+                <label for="vac" class="fw-bold mb-2">No of Vacancy</label>
+                <input type="number" name="vacancy" id="vac" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="dead" class="fw-bold mb-2">Deadline</label>
+                <input type="date" name="deadline" id="dead" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="desc" class="fw-bold mb-2">Job description</label>
+                <textarea type="text" name="description" id="desc" class="form-control"></textarea>
+            </div>
+            <button class="w-100 btn btn-secondary" type="submit">Post Job</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

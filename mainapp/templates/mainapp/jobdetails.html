@@ -1,0 +1,117 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block maintitle %}
+Hire Hub - Find Best Jobs
+{% endblock %}
+
+{% block main %}
+<style>
+/* Card styling */
+.card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #f8f9fa;
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+/* Headings */
+h4 {
+    color: #2b3f81;
+    font-weight: bold;
+}
+h3 {
+    color: #0077b6;
+    font-weight: bold;
+}
+
+/* Apply button */
+.apply-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 25px;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.apply-btn:hover {
+    background: #023e8a;
+    transform: scale(1.05);
+}
+
+/* Fade-in animation */
+.fade-in {
+    animation: fadeInUp 0.8s ease-in-out;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Company logo */
+.company-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #0077b6;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+.company-logo:hover {
+    transform: scale(1.1);
+}
+</style>
+
+<div class="row my-3">
+    <!-- Job Details -->
+     <div class="col-sm-1"></div>
+    <div class="col-sm-5 fade-in">
+        <div class="card shadow-lg p-4 h-100">
+            <h4>{{job.title}}</h4>
+
+            <h5 class="mt-3">Skills Required:</h5>
+            <ul>
+                {% for s in job.skills_required.all %}
+                <li>{{s.skill_name}}</li>
+                {% endfor %}
+            </ul>
+
+            <p><strong>Job Type:</strong> {{job.job_type}}</p>
+            <p><strong>Salary:</strong> {{job.salary}}</p>
+            <p><strong>Vacancy:</strong> {{job.vacancy}}</p>
+            <p><strong>Deadline:</strong> {{job.deadline}}</p>
+
+            
+        </div>
+    </div>
+
+    <!-- Company Details -->
+    <div class="col-sm-5 fade-in">
+        <div class="card shadow-lg p-4 h-100 text-center">
+            {% if job.company.logo %}
+            <img src="{{job.company.logo.url}}" alt="Company Logo" class="company-logo">
+            {% endif %}
+            <h3>Company Details</h3>
+            <h4 class="mb-3">{{job.company.company_name}}</h4>
+            <ul class="list-unstyled mt-2">
+                <li><strong>Email:</strong> {{job.company.email}}</li>
+                <li><strong>Location:</strong> {{job.company.location}}</li>
+                <li><strong>Contact No.:</strong> {{job.company.contact_no}}</li>
+                <li><strong>Industry:</strong> {{job.company.industry}}</li>
+                <li><strong>Website:</strong> <a href="{{job.company.website}}" target="_blank">{{job.company.website}}</a></li>
+                <li><strong>Established:</strong> {{job.company.established_at}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-1"></div>
+    {% if job.is_active %}
+            <div class="btn btn-lg"><a href="{% url 'apply' id=job.id %}" class="apply-btn">Apply Now</a></div>
+            {% else %}
+            <p class="text-danger fw-bold">No longer accepting applications</p>
+            {% endif %}
+</div>
+{% endblock %}

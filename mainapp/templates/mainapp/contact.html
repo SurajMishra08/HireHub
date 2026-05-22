@@ -1,0 +1,223 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block maintitle %}
+Hire Hub - Find Best Jobs
+{% endblock %}
+
+{% block main %}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-section {
+        min-height: 90vh;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        animation: fadeIn 1s ease;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .login-title {
+        text-align: center;
+        color: #00c6ff;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+        text-align: center;
+        color: #ddd;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+
+    form p {
+        margin-bottom: 20px;
+    }
+
+    form label {
+        color: #fff;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 12px;
+        border: 2px solid transparent;
+        outline: none;
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        transition: 0.3s ease;
+    }
+
+    form input:focus,
+    form select:focus,
+    form textarea:focus {
+        border: 2px solid #00c6ff;
+        box-shadow: 0 0 12px #00c6ff;
+        background: rgba(255, 255, 255, 0.18);
+    }
+
+    form input::placeholder {
+        color: #ccc;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 30px;
+        background: linear-gradient(90deg, #00c6ff, #0072ff);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 20px #00c6ff;
+    }
+
+    .extra-links {
+        text-align: center;
+        margin-top: 20px;
+        color: #ddd;
+    }
+
+    .extra-links a {
+        color: #00c6ff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .extra-links a:hover {
+        text-decoration: underline;
+    }
+
+    .welcome-text {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 25px;
+        font-size: 1rem;
+    }
+
+    .icon-box {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .icon-box i {
+        font-size: 4rem;
+        color: #00c6ff;
+        animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media(max-width:768px) {
+        .login-card {
+            padding: 25px;
+        }
+
+        .login-title {
+            font-size: 1.7rem;
+        }
+    }
+</style>
+
+<div class="container-fluid p-0">
+    <div class="login-section">
+
+        <div class="login-card">
+
+            <div class="icon-box">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+
+            <h2 class="login-title">Welcome to Hire Hub</h2>
+
+            <p class="login-subtitle">
+                Find your dream job and connect with top companies.
+            </p>
+
+            {% if messages %}
+                {% for m in messages %}
+                    <div class="alert alert-{{m.tags}} alert-dismissible fade show shadow">
+                        {{m}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="submit-btn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Submit
+                </button>
+            </form>
+
+            <div class="extra-links">
+                <p>
+                    Don’t have an account?
+                    <a href="{% url 'register' %}">Create Account</a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

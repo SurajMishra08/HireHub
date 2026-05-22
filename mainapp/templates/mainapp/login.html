@@ -1,0 +1,211 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block maintitle %}
+Hire Hub - Find best jobs
+{% endblock %}
+
+{% block main %}
+<style>
+    .col-sm-12 {
+        height: 80vh;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* BACKGROUND ANIMATION */
+
+
+    .row::before {
+        width: 300px;
+        height: 300px;
+        background: #00c6ff;
+        top: 10%;
+        left: 10%;
+    }
+
+    .row::after {
+        width: 250px;
+        height: 250px;
+        background: #0072ff;
+        bottom: 10%;
+        right: 10%;
+    }
+
+    /* CENTER */
+    .container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    /* LOGIN CARD */
+    .login-card {
+        width: 360px;
+        padding: 40px;
+        border-radius: 20px;
+
+        background: linear-gradient(145deg,
+                rgba(255, 255, 255, 0.12),
+                rgba(255, 255, 255, 0.05));
+
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+        text-align: center;
+        color: white;
+
+        animation: fadeIn 1s ease;
+    }
+
+    .login-card h2 {
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    /* ICON */
+    .login-card img {
+        width: 65px;
+        margin-bottom: 20px;
+        animation: float 3s infinite ease-in-out;
+    }
+
+    /* INPUT WRAPPER */
+    .input-box {
+        position: relative;
+    }
+
+    .input-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ccc;
+    }
+
+    /* INPUT */
+    input {
+        width: 100%;
+        padding: 12px 12px 12px 35px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+
+    input::placeholder {
+        color: #ddd;
+    }
+
+    input:focus {
+        border: 1px solid #00c6ff;
+        box-shadow: 0 0 10px #00c6ff;
+    }
+
+    /* BUTTON */
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        border: none;
+        border-radius: 8px;
+
+        color: white;
+        font-weight: bold;
+        letter-spacing: 1px;
+
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px #00c6ff;
+    }
+
+    /* FOOTER TEXT */
+    .footer-text {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #ccc;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+</style>
+
+<!-- LOGIN -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="login-card">
+
+                    ```
+                    <h2>Welcome Back</h2>
+                    {% if messages %}
+                    {% for m in messages %}
+                    <div class="alert alert-danger alert-dismissible fade shadow">
+                        {{m}}
+                        <button type="button" class="btn-close" data-bs-dismis="alert" aria-label="alert"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+                    <div class="input-box">
+                        <i>👤</i>
+                        <input type="text" placeholder="Username" name="username" required>
+                    </div>
+
+                    <div class="input-box">
+                        <i>🔒</i>
+                        <input type="password" placeholder="Password" name="password" required>
+                    </div>
+
+                    <button>Login</button>
+
+                    <div class="footer-text">
+                        Connecting Talent with Opportunity 🚀
+                    </div>
+                    ```
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block admin %}
+<style>
+.card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.table th {
+    background: #203a43;
+    color: #fff;
+    text-align: center;
+}
+.skill-badge {
+    background: #0077b6;
+    color: #fff;
+    margin: 1px;
+    padding: 2px 5px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+}
+</style>
+
+<div class="col-sm-12">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center text-primary mb-4">Jobseekers</h3>
+        <table class="table table-hover table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Profile</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Skills</th>
+                    <th>Education</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for js in jobseekers %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        {% if js.picture %}
+                            <img src="{{ js.picture.url }}" alt="Profile" width="50" height="50" class="rounded-circle">
+                        {% else %}
+                            <span class="text-muted">No Image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ js.first_name }} {{ js.last_name }}</td>
+                    <td>{{ js.email }}</td>
+                    <td>{{ js.contact_no }}</td>
+                    <td>
+                        {% for skill in js.skills.all %}
+                            <span class="skill-badge">{{ skill.skill_name }}</span>
+                        {% empty %}
+                            <span class="text-muted">No skills</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for edu in js.educations.all %}
+                            <div>{{ edu.degree_name }} ({{ edu.start_year }} - {{ edu.end_year }})</div>
+                        {% empty %}
+                            <span class="text-muted">No education</span>
+                        {% endfor %}
+                    </td>
+                    <!-- <td>
+                        {% for exp in js.experiences.all %}
+                            <div>{{ exp.company_name }} - {{ exp.designation }}</div>
+                        {% empty %}
+                            <span class="text-muted">No experience</span>
+                        {% endfor %}
+                    </td> -->
+                    <td>
+                        <a href="{% url 'deletejobseeker' js.id %}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this jobseeker?');">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center text-muted">No jobseekers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

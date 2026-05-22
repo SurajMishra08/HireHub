@@ -1,0 +1,64 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block admin %}
+<style>
+.dashboard-card {
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+.bg-gradient-blue { background: linear-gradient(135deg, #0077b6, #00b4d8); }
+.bg-gradient-green { background: linear-gradient(135deg, #2c5364, #0f9d58); }
+.bg-gradient-orange { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
+.bg-gradient-purple { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+.bg-gradient-red { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+</style>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="dashboard-card bg-gradient-blue">
+            <div class="card-icon"><i class="ti ti-users"></i></div>
+            <h4>Jobseekers</h4>
+            <h2>{{ total_jobseekers }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="dashboard-card bg-gradient-green">
+            <div class="card-icon"><i class="ti ti-briefcase"></i></div>
+            <h4>Employers</h4>
+            <h2>{{ total_employers }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="dashboard-card bg-gradient-orange">
+            <div class="card-icon"><i class="ti ti-color-swatch"></i></div>
+            <h4>Categories</h4>
+            <h2>{{ total_categories }}</h2>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="dashboard-card bg-gradient-purple">
+            <div class="card-icon"><i class="ti ti-file-text"></i></div>
+            <h4>Jobs</h4>
+            <h2>{{ total_jobs }}</h2>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="dashboard-card bg-gradient-red">
+            <div class="card-icon"><i class="ti ti-mail"></i></div>
+            <h4>Enquiries</h4>
+            <h2>{{ total_enquiries }}</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}

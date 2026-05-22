@@ -1,0 +1,135 @@
+{% extends 'jobseeker/jobseekerbase.html' %}
+{% load static %}
+{% block admin %}
+<style>
+/* Profile image */
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #0077b6;
+    transition: transform 0.3s ease;
+}
+.profile-img:hover {
+    transform: scale(1.1);
+}
+
+/* Skill badges */
+.skill-badge {
+    background: #0077b6;
+    color: #fff;
+    margin: 5px;
+    padding: 8px 15px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+.skill-badge:hover {
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
+    transform: scale(1.1);
+}
+
+/* Card hover */
+.card {
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.circular-progress {
+    position: relative;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background: conic-gradient(#00b4d8 calc(var(--progress) * 1%), #e0e0e0 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    --progress: 0; /* default */
+    transition: background 0.6s ease;
+}
+
+.circular-progress .progress-value {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2b3f81;
+}
+
+</style>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-lg p-5 text-center profile-card" style="align-items: center;">
+            {% if js.picture %}
+    <img src="{{ js.picture.url }}" class="img-fluid rounded shadow" alt="Profile picture" style="height: 130px; width: 130px;">
+{% else %}
+    <img src="{% static 'admin/assets/images/user/avatar-2.jpg' %}" class="img-fluid rounded shadow" alt="Default profile picture">
+{% endif %}
+
+            <h4>{{js.first_name}} {{js.last_name}}</h4>
+            <p class="text-muted">{{js.email}}</p>
+            <p><i class="fa-solid fa-phone"></i> {{js.contact_no}}</p>
+            <a href="{% url 'jsupdate' %}" class="btn btn-info btn-sm mt-2">Edit Profile</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card shadow-lg p-4 text-center">
+    <h5>Profile Completion</h5>
+    <div class="circular-progress" data-progress="70">
+        <span class="progress-value">70%</span>
+    </div>
+</div>
+
+        <div class="row mt-4">
+    <div class="card col-sm-12">
+        <div class=" shadow-lg p-4">
+            <h5>My Skills</h5>
+            {% for s in js.skills.all %}
+            <span class="badge skill-badge">{{s.skill_name|title}}</span>
+            {% empty %}
+            <p>No skills added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-sm-12">
+        <div class="card shadow-lg p-4">
+            <h5>Applied Jobs</h5>
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applications %}
+                    <tr>
+                        <td>{{app.job.title}}</td>
+                        <td>{{app.job.company.company_name}}</td>
+                        <td>
+                            {% if app.status == "pending" %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% elif app.status == "shortlisted" %}
+                                <span class="badge bg-info">Shortlisted</span>
+                            {% elif app.status == "selected" %}
+                                <span class="badge bg-success">Selected</span>
+                            {% elif app.status == "rejected" %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
