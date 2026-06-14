@@ -5,8 +5,9 @@ Hire Hub - Find Best Jobs
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center about-section">
-    <div class="row w-75">
+<div class="about-section min-vh-100 d-flex align-items-center justify-content-center">
+
+    <div class="row w-100 mx-0">
         <div class="col-sm-12 text-center mb-5">
             <h1 class="fw-bold text-light animate-title">About HireHub</h1>
             <p class="text-light fs-5">Connecting job seekers and employers with ease, speed, and trust.</p>
@@ -48,18 +49,15 @@ Hire Hub - Find Best Jobs
 </div>
 
 <style>
-/* Background */
 .about-section {
     background: linear-gradient(135deg, #0d1b2a, #1b263b);
-    padding: 50px 0;
+    padding: 50px 0px;
 }
 
-/* Title animation */
 .animate-title {
     animation: fadeInDown 1s ease-in-out;
 }
 
-/* Card styling */
 .about-card {
     border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -69,10 +67,13 @@ Hire Hub - Find Best Jobs
     box-shadow: 0 12px 25px rgba(0,0,0,0.3);
 }
 
-/* Keyframes */
 @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+
+
 </style>
 {% endblock %}

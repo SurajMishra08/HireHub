@@ -1,34 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<!-- [Head] start -->
 
 <head>
   <title>Admin Dashboard</title>
-  <!-- [Meta] -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-
-  <!-- [Favicon] icon -->
   <link rel="icon" href="" type="image/x-icon">
-
-  <!-- data tables css -->
   <link rel="stylesheet" href="{% static 'admin/assets/css/plugins/dataTables.bootstrap5.min.css' %}">
-  <!-- [Google Font] Family -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
     id="main-font-link">
-  <!-- [Tabler Icons] https://tablericons.com -->
   <link rel="stylesheet" href="{% static 'admin/assets/fonts/tabler-icons.min.css' %}">
-  <!-- [Feather Icons] https://feathericons.com -->
   <link rel="stylesheet" href="{% static 'admin/assets/fonts/feather.css' %}">
-  <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
   <link rel="stylesheet" href="{% static 'admin/assets/fonts/fontawesome.css' %}">
-  <!-- [Material Icons] https://fonts.google.com/icons -->
   <link rel="stylesheet" href="{% static 'admin/assets/fonts/material.css' %}">
-  <!-- [Template CSS Files] -->
   <link rel="stylesheet" href="{% static 'admin/assets/css/style.css' %}" id="main-style-link">
   <link rel="stylesheet" href="{% static 'admin/assets/css/style-preset.css' %}">
 
@@ -55,23 +42,18 @@
 }
   
 </style>
-<!-- [Head] end -->
-<!-- [Body] Start -->
 
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
-  <!-- [ Pre-loader ] start -->
   <div class="loader-bg">
     <div class="loader-track">
       <div class="loader-fill"></div>
     </div>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ Sidebar Menu ] start -->
+
   <nav class="pc-sidebar" style="background: linear-gradient(#2c5364); ">
     <div class="navbar-wrapper">
       <div class="m-header">
         <a href="{% url 'index' %}" class="b-brand text-primary">
-          <!-- ========   Change your logo from here   ============ -->
           HireHub
         </a>
       </div>
@@ -160,12 +142,10 @@
       </div>
     </div>
   </nav>
-  <!-- [ Sidebar Menu ] end --> <!-- [ Header Topbar ] start -->
   <header class="pc-header" style="background: linear-gradient(90deg,#203a43, #2c5364);">
-    <div class="header-wrapper"> <!-- [Mobile Media Block] start -->
+    <div class="header-wrapper"> 
       <div class="me-auto pc-mob-drp">
         <ul class="list-unstyled">
-          <!-- ======= Menu collapse Icon ===== -->
           <li class="pc-h-item pc-sidebar-collapse">
             <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
               <i class="ti ti-menu-2"></i>
@@ -198,7 +178,7 @@
           </li>
         </ul>
       </div>
-      <!-- [Mobile Media Block end] -->
+
       <div class="ms-auto">
         <ul class="list-unstyled">
           
@@ -253,11 +233,7 @@
       </div>
     </div>
   </header>
-  <!-- [ Header ] end -->
 
-
-
-  <!-- [ Main Content ] start -->
   <div class="pc-container" >
     <div class="pc-content" >
       {% block admin %}
@@ -265,7 +241,6 @@
       {% endblock %}
     </div>
   </div>
-  <!-- [ Main Content ] end -->
   <footer class="pc-footer">
     <div class="footer-wrapper container-fluid">
       <div class="row">
@@ -286,11 +261,8 @@
     </div>
   </footer>
 
-  <!-- [Page Specific JS] start -->
   <script src="{% static 'admin/assets/js/plugins/apexcharts.min.js' %}"></script>
   <script src="{% static 'admin/assets/js/pages/dashboard-default.js' %}"></script>
-  <!-- [Page Specific JS] end -->
-  <!-- Required Js -->
   <script src="{% static 'admin/assets/js/plugins/popper.min.js' %}"></script>
   <script src="{% static 'admin/assets/js/plugins/simplebar.min.js' %}"></script>
   <script src="{% static 'admin/assets/js/plugins/bootstrap.min.js' %}"></script>
@@ -342,6 +314,5 @@
     {% endfor %}
   {% endif %}
 </body>
-<!-- [Body] end -->
 
 </html>
