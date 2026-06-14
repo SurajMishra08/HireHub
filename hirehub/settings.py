@@ -28,13 +28,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mzs^*so-=qnl%87w0#pn#4qt(&#z8ou$7b!e!6nqe2p-2g9keo'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["hirehub.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
